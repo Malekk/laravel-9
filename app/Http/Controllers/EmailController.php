@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmailRequest;
+use App\Jobs\SendEmailJob;
 use App\Mail\Mail;
 use App\Utilities\Contracts\ElasticsearchHelperInterface;
 use App\Utilities\Contracts\RedisHelperInterface;
@@ -23,6 +24,8 @@ class EmailController extends Controller
             /** @var RedisHelperInterface $redisHelper */
             $redisHelper = app()->make(RedisHelperInterface::class);
             $redisHelper->storeRecentMessage($idEmail, $mail->subject, $mail->email);
+
+            SendEmailJob::dispatch($mail);
         }
 
         return response()->json(['message' => 1 === $i ? 'Email stored successfully.' : $i.' emails stored successfully.']);
