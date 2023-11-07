@@ -9,7 +9,6 @@ use App\Utilities\Contracts\RedisHelperInterface;
 
 class EmailController extends Controller
 {
-    // TODO: finish implementing send method
     public function send(EmailRequest $request)
     {
         $i = 0;
@@ -19,12 +18,11 @@ class EmailController extends Controller
 
             /** @var ElasticsearchHelperInterface $elasticsearchHelper */
             $elasticsearchHelper = app()->make(ElasticsearchHelperInterface::class);
-            $elasticsearchHelper->storeEmail($mail->body, $mail->subject, $mail->email);
+            $idEmail = $elasticsearchHelper->storeEmail($mail->body, $mail->subject, $mail->email);
 
             /** @var RedisHelperInterface $redisHelper */
-            // $redisHelper = app()->make(RedisHelperInterface::class);
-            // TODO: Create implementation for storeRecentMessage and uncomment the following line
-            // $redisHelper->storeRecentMessage(...);
+            $redisHelper = app()->make(RedisHelperInterface::class);
+            $redisHelper->storeRecentMessage($idEmail, $mail->subject, $mail->email);
         }
 
         return response()->json(['message' => 1 === $i ? 'Email stored successfully.' : $i.' emails stored successfully.']);
