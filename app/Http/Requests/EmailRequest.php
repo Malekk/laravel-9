@@ -16,6 +16,7 @@ class EmailRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        //Middleware can be applied to this class for additional functionality.
         $token = PersonalAccessToken::findToken($this->get('api_token'));
         if (!$token) {
             return false;
