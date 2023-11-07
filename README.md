@@ -26,3 +26,30 @@ You can now clone your laravel-9 repository on your machine (in my case in the c
 
 cd ~/code
 git clone git@github.com:<your_username>/laravel-9.git
+
+Install
+==================
+
+## Create your local .env file
+```bash
+ cp .env.example .env
+```
+
+## Install containers
+```bash
+./vendor/bin/sail up
+```
+## Connect to a container
+
+```bash
+ docker ps 
+```
+```bash
+ docker exec -it <CONTAINER_NAME> bash
+```
+
+## Migrate
+in the container you should execute
+```bash
+ php artisan migrate --seed
+```
