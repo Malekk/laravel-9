@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailRequest;
 use App\Utilities\Contracts\ElasticsearchHelperInterface;
 use App\Utilities\Contracts\RedisHelperInterface;
 
 class EmailController extends Controller
 {
     // TODO: finish implementing send method
-    public function send()
+    public function send(EmailRequest $request)
     {
 
 
